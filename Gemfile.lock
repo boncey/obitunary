@@ -1,0 +1,20 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.3.5)
+    extlib (0.9.16)
+    itunes-library (0.1.1)
+      plist
+    json (1.8.1)
+    ken (0.2.1)
+      addressable
+      extlib
+      json
+    plist (3.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  itunes-library
+  ken
