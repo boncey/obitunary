@@ -13,6 +13,7 @@ def main(param)
   if (File.exist?(param))
     puts "iTunes mode" if @verbose
     library_file = param
+    puts "Reading artists from #{library_file}"
     library = ITunes::Library.load(library_file)
 
     artists = artists(library)
@@ -30,6 +31,7 @@ def main(param)
 end
 
 def lookup(artists)
+  puts "Looking up artists in Wikipedia"
   deceased = []
 
   artists.each do |artist|
@@ -43,14 +45,14 @@ def lookup(artists)
 end
 
 def lookup_artist(artist_name)
-  puts "Looking up artist '#{artist_name}'" if @debug
+  puts "Looking up artist '#{artist_name}'" if @verbose
   page = Wikipedia.find(artist_name)
 
   puts page.content if @debug
   if (page.content == nil) || (!page.content.include?("Infobox musical artist")) || (page.content.include?("group_or_band"))
     artist = Artist.new(artist_name)
     artist.unrecognised = true
-    puts "#{artist_name} is not an artist"
+    puts "#{artist_name} is not an artist" if @verbose
   else
     deceased = page.content && page.content.downcase.include?("death date and age")
     artist = Artist.new(artist_name, deceased)
@@ -66,7 +68,6 @@ def lookup_artist(artist_name)
 end
 
 def artists(library)
-  puts "Fetching artists" if @verbose
   artists = library.music.tracks.map(&:artist)
 
   artists.uniq
