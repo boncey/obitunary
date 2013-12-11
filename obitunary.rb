@@ -35,7 +35,7 @@ def lookup(artists)
   deceased = []
 
   artists.each do |artist|
-    if (lookup_artist(artist))
+    if (artist.length > 0 && lookup_artist(artist))
       deceased << artist
     end
     sleep 5
